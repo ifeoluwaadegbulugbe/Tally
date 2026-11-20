@@ -461,7 +461,18 @@ Deadline 22 Dec 2026, 9:00pm Lagos. Self-imposed submission: 20 Dec. Marketplace
 - docs/DEVPOST.md: every Devpost field (blueprint R), bonus write-ups, honest limits. Open:
   YouTube link, public repo link, Marketplace ticket link.
 - Source published 2026-11-20: https://github.com/ifeoluwaadegbulugbe/Tally (public, main).
-- Open: record and upload the video (Public), screenshots, submit.
+- 2026-11-20: demo video and gallery made from live captures of the demo site (reset + Load demo
+  data first): media/tally-demo.mp4 (1920x1080, 2:55, 22 beats, Windows "Zira" narration, captions,
+  no music) and media/gallery-1..6.png (1500x1000, 3:2). Rebuild with tools/demo-video
+  (beats.json = script, tts.ps1 = narration, build.py = frames + ffmpeg). The Rovo agent beats are
+  real: it answered with IDs and rule reasons, and the CREATE action showed Rovo's "Please review"
+  card before adding the inbox candidate.
+- Issue found while recording: the Related context panel showed no parent/blocker for TD-2,
+  although the same curated query run in the browser as the user returns parent TD-1 and
+  blocked-by TD-3 (it worked in Tally on 15 Nov). Not diagnosed: the Forge CLI login expired
+  ("Your API token is no longer valid"), so no debug deploy. The video narrates the panel
+  without claiming the parent/blocker. Next: forge login, add a temporary log, compare.
+- Open: upload the video (Public), add the gallery to Devpost, submit.
 
 ## Deviations from the blueprint (decided while building)
 - `Commitment` gained `confirmedAt`, `assignedAt`, `confirmedDueDate`, `priorityOverridden`:

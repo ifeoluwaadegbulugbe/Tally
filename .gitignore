@@ -5,3 +5,6 @@ static/*/build/
 *.log
 coverage/
 /.forge/
+
+# Demo video build output (uploaded to YouTube, not kept in git)
+media/*.mp4
