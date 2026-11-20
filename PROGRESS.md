@@ -460,7 +460,8 @@ Deadline 22 Dec 2026, 9:00pm Lagos. Self-imposed submission: 20 Dec. Marketplace
   steps and a screenshot list.
 - docs/DEVPOST.md: every Devpost field (blueprint R), bonus write-ups, honest limits. Open:
   YouTube link, public repo link, Marketplace ticket link.
-- Open: record and upload the video (Public), screenshots, publish the source repo, submit.
+- Source published 2026-11-20: https://github.com/ifeoluwaadegbulugbe/Tally (public, main).
+- Open: record and upload the video (Public), screenshots, submit.
 
 ## Deviations from the blueprint (decided while building)
 - `Commitment` gained `confirmedAt`, `assignedAt`, `confirmedDueDate`, `priorityOverridden`:
@@ -529,4 +530,4 @@ Deadline 22 Dec 2026, 9:00pm Lagos. Self-imposed submission: 20 Dec. Marketplace
 | T17 | Tests and permissions | done; 35/36 pass, O36 (install link) belongs to T19 |
 | T18 | Marketplace submission | pack ready; partner signup and verification are Ife's |
 | T19 | Share link | done; stranger install on a fresh site works (O36) |
-| T20 | Media and Devpost | script + text ready; video, repo, submit open |
+| T20 | Media and Devpost | script, text and public repo ready; video and submit open |

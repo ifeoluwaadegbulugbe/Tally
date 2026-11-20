@@ -1,12 +1,12 @@
 # Devpost submission text (Codegeist 2026)
 
-Claim only what runs. Fill the three [brackets] before submitting.
+Claim only what runs. Fill the two remaining [brackets] before submitting.
 
 **Name:** Tally
 **Tagline / short description (under 200 characters):** Tally finds the promises your team makes to customers in Jira and Confluence, gets each one owned, ties it to delivery work and flags the ones slipping.
 **Category:** Apps for Business Teams
 **Video:** [YOUTUBE LINK]
-**Repo:** [PUBLIC GITHUB REPO LINK]
+**Repo:** https://github.com/ifeoluwaadegbulugbe/Tally
 **Installation link:** see README (link also in docs/install-link.txt)
 **Marketplace:** [REVIEW TICKET OR LISTING LINK]
 
