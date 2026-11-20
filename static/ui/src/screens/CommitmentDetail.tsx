@@ -769,7 +769,7 @@ function GraphPanel({ c, me, editable, linkKeys, onAttachPage, onLink, onOwner }
               {i.error ? (
                 <p className="muted small">Graph unavailable for {i.key}: {i.error}</p>
               ) : i.related.length === 0 ? (
-                <p className="muted small">The graph has no parent, child, blocking or linked work for {i.key}.</p>
+                <p className="muted small">The graph has no parent, child, blocking or linked work for {i.key}. <button className="btn btn-quiet" onClick={refetch}>Check again</button></p>
               ) : (
                 <ul className="list">
                   {i.related.map((r) => (

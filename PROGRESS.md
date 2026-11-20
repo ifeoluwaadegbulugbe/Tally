@@ -467,11 +467,13 @@ Deadline 22 Dec 2026, 9:00pm Lagos. Self-imposed submission: 20 Dec. Marketplace
   (beats.json = script, tts.ps1 = narration, build.py = frames + ffmpeg). The Rovo agent beats are
   real: it answered with IDs and rule reasons, and the CREATE action showed Rovo's "Please review"
   card before adding the inbox candidate.
-- Issue found while recording: the Related context panel showed no parent/blocker for TD-2,
-  although the same curated query run in the browser as the user returns parent TD-1 and
-  blocked-by TD-3 (it worked in Tally on 15 Nov). Not diagnosed: the Forge CLI login expired
-  ("Your API token is no longer valid"), so no debug deploy. The video narrates the panel
-  without claiming the parent/blocker. Next: forge login, add a temporary log, compare.
+- Issue found while recording, then fixed: the Related context panel showed no parent/blocker
+  for TD-2 although the graph had them. After forge login, a temporary log showed the app's call
+  now returning parent TD-1 and blocked-by TD-3, with no code change: the graph intermittently
+  answers with every relation empty. Fix: GraphClient.relatedWork asks once more (after 1.2 s)
+  when every relation is empty, and the empty message has a "Check again" button. 175 tests (2 new).
+  Deployed to development and verified live (Parent TD-1, Blocked by TD-3, with Link). The video's
+  graph scene and gallery-4 now use that capture. Production deploy waits for Ife's OK.
 - Open: upload the video (Public), add the gallery to Devpost, submit.
 
 ## Deviations from the blueprint (decided while building)

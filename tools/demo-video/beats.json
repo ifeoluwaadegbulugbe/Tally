@@ -1,24 +1,112 @@
 [
-  {"shot": "title", "caption": "Tally: every promise to a customer, kept", "say": "Sales tells a customer: we'll ship single sign-on before your rollout. Then the promise is buried in a page, and nobody owns it until the customer asks. Tally keeps those promises."},
-  {"shot": "01-dashboard.jpg", "caption": "Tally inside Jira: 8 open, 4 at risk, 1 overdue, 1 with no owner", "say": "This is Tally, inside Jira. Eight open commitments. Four at risk, one overdue, and one with no owner."},
-  {"shot": "02-attention.jpg", "caption": "Every line says why, in plain words", "say": "Every line says why, in plain words. A blocked Jira issue. A promise confirmed two days ago that nobody owns."},
-  {"shot": "03-inbox.jpg", "caption": "Discovery inbox: possible promises found in Jira and Confluence", "say": "Tally scans the Jira projects and Confluence spaces you choose, and lists possible promises with the exact quote."},
-  {"shot": "04-review.jpg", "caption": "A person confirms, edits, marks ambiguous or rejects. Nothing is tracked automatically", "say": "A person reviews each one. The account and the date come from the quote. Nothing is tracked until someone confirms it."},
-  {"shot": "05-sso.jpg", "caption": "The evidence is the customer's own words, linked to the source", "say": "Here is the promise nobody owns. The evidence is the customer's own words, linked back to the Confluence page."},
-  {"shot": "06-link.jpg", "caption": "Link the Jira work that delivers the promise", "say": "Link the Jira work that delivers it."},
-  {"shot": "07-context.jpg", "caption": "Live Jira status, owner suggestions and Teamwork Graph context", "say": "Tally reads that issue live, suggests an owner from the people doing the work, and checks the Teamwork Graph for related work and pages."},
-  {"shot": "08-ehr.jpg", "caption": "At risk: the linked Jira issue is flagged", "say": "This integration is at risk. Its Jira issue is flagged as blocked."},
-  {"shot": "09-why.jpg", "caption": "Rule-based risk flags, each with its reason", "say": "Every risk is a rule, and Why explains it. Nine plain rules. No guessing."},
-  {"shot": "10-risks.jpg", "caption": "Risks grouped by rule, with acknowledge and expiry", "say": "The Risks page groups them by rule, so a lead can work through them one by one."},
-  {"shot": "14-agent.jpg", "caption": "Tally Agent in Rovo chat", "say": "Tally Agent works inside Rovo chat."},
-  {"shot": "15-agent-answer.jpg", "caption": "Answers come from Tally's actions: IDs and rule reasons", "say": "Ask which commitments are at risk and why. It answers with commitment IDs and the rule reasons."},
-  {"shot": "16-agent-why.jpg", "caption": "The agent only states facts Tally returns", "say": "It only states facts that Tally returns. It never invents a promise."},
-  {"shot": "17-agent-review.jpg", "caption": "Paste a customer message: the agent proposes, you confirm", "say": "Paste a promise from a customer message. The agent proposes it, with the date from the quote, and you confirm before anything is saved."},
-  {"shot": "18-agent-added.jpg", "caption": "It lands in the Tally inbox for human review", "say": "It lands in the Tally inbox, for a person to review."},
-  {"shot": "mcp", "caption": "Seven Tally tools on Atlassian's MCP server, here in Claude", "say": "The same seven tools are on Atlassian's MCP server, so other AI assistants, like Claude, can use them with the user's own permissions."},
-  {"shot": "11-draft.jpg", "caption": "Customer update drafted from stored facts only", "say": "Now draft a customer update. It is written only from stored facts."},
-  {"shot": "12-facts.jpg", "caption": "The facts it used, beside it. Copy stays disabled until approval", "say": "The facts it used are right beside it. Copy stays disabled until a person approves."},
-  {"shot": "13-approved.jpg", "caption": "Approve, copy into your own email, mark sent. Tally never sends", "say": "Approve it, copy it into your own email, and mark it sent. Tally never sends anything itself."},
-  {"shot": "19-settings.jpg", "caption": "Runs on Atlassian: checked as you, no data leaves your site", "say": "Everything runs on Atlassian. Jira, Confluence and the Teamwork Graph are checked as you, and no data leaves your site."},
-  {"shot": "closing", "caption": "Tally: Jira · Confluence · Rovo agent · MCP · Teamwork Graph", "say": "Tally. Every promise to a customer, kept."}
+  {
+    "shot": "title",
+    "caption": "Tally: every promise to a customer, kept",
+    "say": "Sales tells a customer: we'll ship single sign-on before your rollout. Then the promise is buried in a page, and nobody owns it until the customer asks. Tally keeps those promises."
+  },
+  {
+    "shot": "01-dashboard.jpg",
+    "caption": "Tally inside Jira: 8 open, 4 at risk, 1 overdue, 1 with no owner",
+    "say": "This is Tally, inside Jira. Eight open commitments. Four at risk, one overdue, and one with no owner."
+  },
+  {
+    "shot": "02-attention.jpg",
+    "caption": "Every line says why, in plain words",
+    "say": "Every line says why, in plain words. A blocked Jira issue. A promise confirmed two days ago that nobody owns."
+  },
+  {
+    "shot": "03-inbox.jpg",
+    "caption": "Discovery inbox: possible promises found in Jira and Confluence",
+    "say": "Tally scans the Jira projects and Confluence spaces you choose, and lists possible promises with the exact quote."
+  },
+  {
+    "shot": "04-review.jpg",
+    "caption": "A person confirms, edits, marks ambiguous or rejects. Nothing is tracked automatically",
+    "say": "A person reviews each one. The account and the date come from the quote. Nothing is tracked until someone confirms it."
+  },
+  {
+    "shot": "05-sso.jpg",
+    "caption": "The evidence is the customer's own words, linked to the source",
+    "say": "Here is the promise nobody owns. The evidence is the customer's own words, linked back to the Confluence page."
+  },
+  {
+    "shot": "06-link.jpg",
+    "caption": "Link the Jira work that delivers the promise",
+    "say": "Link the Jira work that delivers it."
+  },
+  {
+    "shot": "07-context.jpg",
+    "caption": "Teamwork Graph: the parent epic and the review that blocks it",
+    "say": "Tally reads that issue live, and the Teamwork Graph shows its parent epic and the security review that blocks it. Each can be linked in one click."
+  },
+  {
+    "shot": "08-ehr.jpg",
+    "caption": "At risk: the linked Jira issue is flagged",
+    "say": "This integration is at risk. Its Jira issue is flagged as blocked."
+  },
+  {
+    "shot": "09-why.jpg",
+    "caption": "Rule-based risk flags, each with its reason",
+    "say": "Every risk is a rule, and Why explains it. Nine plain rules. No guessing."
+  },
+  {
+    "shot": "10-risks.jpg",
+    "caption": "Risks grouped by rule, with acknowledge and expiry",
+    "say": "The Risks page groups them by rule, so a lead can work through them one by one."
+  },
+  {
+    "shot": "14-agent.jpg",
+    "caption": "Tally Agent in Rovo chat",
+    "say": "Tally Agent works inside Rovo chat."
+  },
+  {
+    "shot": "15-agent-answer.jpg",
+    "caption": "Answers come from Tally's actions: IDs and rule reasons",
+    "say": "Ask which commitments are at risk and why. It answers with commitment IDs and the rule reasons."
+  },
+  {
+    "shot": "16-agent-why.jpg",
+    "caption": "The agent only states facts Tally returns",
+    "say": "It only states facts that Tally returns. It never invents a promise."
+  },
+  {
+    "shot": "17-agent-review.jpg",
+    "caption": "Paste a customer message: the agent proposes, you confirm",
+    "say": "Paste a promise from a customer message. The agent proposes it, with the date from the quote, and you confirm before anything is saved."
+  },
+  {
+    "shot": "18-agent-added.jpg",
+    "caption": "It lands in the Tally inbox for human review",
+    "say": "It lands in the Tally inbox, for a person to review."
+  },
+  {
+    "shot": "mcp",
+    "caption": "Seven Tally tools on Atlassian's MCP server, here in Claude",
+    "say": "The same seven tools are on Atlassian's MCP server, so other AI assistants, like Claude, can use them with the user's own permissions."
+  },
+  {
+    "shot": "11-draft.jpg",
+    "caption": "Customer update drafted from stored facts only",
+    "say": "Now draft a customer update. It is written only from stored facts."
+  },
+  {
+    "shot": "12-facts.jpg",
+    "caption": "The facts it used, beside it. Copy stays disabled until approval",
+    "say": "The facts it used are right beside it. Copy stays disabled until a person approves."
+  },
+  {
+    "shot": "13-approved.jpg",
+    "caption": "Approve, copy into your own email, mark sent. Tally never sends",
+    "say": "Approve it, copy it into your own email, and mark it sent. Tally never sends anything itself."
+  },
+  {
+    "shot": "19-settings.jpg",
+    "caption": "Runs on Atlassian: checked as you, no data leaves your site",
+    "say": "Everything runs on Atlassian. Jira, Confluence and the Teamwork Graph are checked as you, and no data leaves your site."
+  },
+  {
+    "shot": "closing",
+    "caption": "Tally: Jira · Confluence · Rovo agent · MCP · Teamwork Graph",
+    "say": "Tally. Every promise to a customer, kept."
+  }
 ]

@@ -43,8 +43,25 @@ describe('GraphClient', () => {
   });
 
   it('empty graph is ok with an empty list', async () => {
-    const r = await new GraphClient(async () => resp(200, related({}))).relatedWork('x');
+    let calls = 0;
+    const r = await new GraphClient(async () => { calls++; return resp(200, related({})); }, 0).relatedWork('x');
     expect(r.ok && r.data).toEqual([]);
+    expect(calls).toBe(2); // an all-empty answer is asked once more
+  });
+
+  it('an all-empty answer is retried once and the second answer is used', async () => {
+    let calls = 0;
+    const http: GraphHttp = async () => (++calls === 1 ? resp(200, related({})) : resp(200, related({ parent: [wi('TD-1')], blocked_by: [wi('TD-3')] })));
+    const r = await new GraphClient(http, 0).relatedWork(issueAri(CLOUD, '66401'));
+    expect(r.ok && r.data.map((x) => `${x.kind}:${x.key}`)).toEqual(['PARENT:TD-1', 'BLOCKED_BY:TD-3']);
+    expect(calls).toBe(2);
+  });
+
+  it('a non-empty first answer is not asked again', async () => {
+    let calls = 0;
+    const r = await new GraphClient(async () => { calls++; return resp(200, related({ child: [wi('TD-2')] })); }, 0).relatedWork('x');
+    expect(r.ok && r.data.length).toBe(1);
+    expect(calls).toBe(1);
   });
 
   it('error paths: GraphQL errors with no data, HTTP failures, thrown calls', async () => {
@@ -82,7 +99,7 @@ function fakeGraph(byIssue: Record<string, unknown>, byUser: Record<string, unkn
     calls.push(String(v.userId));
     return resp(200, { data: { atlassianUserContent: conn(byUser[id] ?? []) } });
   };
-  return { graph: new GraphClient(http), calls };
+  return { graph: new GraphClient(http, 0), calls };
 }
 const noJira = new JiraClient(async () => { throw new Error('Jira should not be called'); });
 

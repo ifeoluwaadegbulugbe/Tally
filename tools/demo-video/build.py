@@ -120,6 +120,7 @@ print(f'video: {final} ({total:.1f} s, {len(segments)} beats)')
 gallery = [('01-dashboard.jpg', 'Dashboard: what needs attention and why'),
            ('04-review.jpg', 'Discovery inbox: a person confirms every promise'),
            ('09-why.jpg', 'Rule-based risk flags, each with its reason'),
+           ('07-context.jpg', 'Teamwork Graph: related work for the linked Jira issue'),
            ('15-agent-answer.jpg', 'Tally Agent in Rovo: answers from stored facts'),
            ('12-facts.jpg', 'Customer updates from stored facts, approved by a person'),
            ('19-settings.jpg', 'Runs on Atlassian: Jira, Confluence, Teamwork Graph')]

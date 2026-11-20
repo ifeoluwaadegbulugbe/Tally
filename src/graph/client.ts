@@ -58,7 +58,11 @@ type GqlBody = { data?: Record<string, Conn> | null; errors?: Array<{ message?: 
 const s = (v: unknown): string | null => (typeof v === 'string' && v.length > 0 ? v : null);
 
 export class GraphClient {
-  constructor(private readonly http: GraphHttp) {}
+  constructor(
+    private readonly http: GraphHttp,
+    /** Pause before re-asking when every relation came back empty (0 in tests). */
+    private readonly emptyRetryMs = 1200,
+  ) {}
 
   /** POST one query; partial data with field errors still counts, a null data block does not. */
   private async run(name: string, query: string, variables: Record<string, unknown>): Promise<Result<Record<string, Conn>>> {
@@ -91,10 +95,23 @@ export class GraphClient {
     return body.data?.echo === 'ok' ? ok(true) : fail('upstream', `Teamwork Graph: ${body.errors?.[0]?.message?.slice(0, 160) ?? 'no answer'}`);
   }
 
-  /** Parent, child, blocking and linked work for one Jira issue, in one round trip. */
+  /**
+   * Parent, child, blocking and linked work for one Jira issue, in one round trip.
+   * The graph sometimes answers with every relation empty and then, moments later, with the
+   * real edges (seen live on 20 Nov 2026 for an issue whose links had not changed), so an
+   * all-empty answer is asked once more after a short pause before it is trusted.
+   */
   async relatedWork(issueAriValue: string): Promise<Result<RelatedWork[]>> {
+    const first = await this.relatedOnce(issueAriValue);
+    if (!first.ok || first.data.length > 0) return first;
+    await new Promise((r) => setTimeout(r, this.emptyRetryMs));
+    return this.relatedOnce(issueAriValue);
+  }
+
+  private async relatedOnce(issueAriValue: string): Promise<Result<RelatedWork[]>> {
     const res = await this.run('related work', RELATED_WORK_QUERY, { id: issueAriValue });
-    if (!res.ok) return res;    const out: RelatedWork[] = [];
+    if (!res.ok) return res;
+    const out: RelatedWork[] = [];
     for (const kind of RELATION_KINDS) {
       for (const edge of res.data[kind.toLowerCase()]?.edges ?? []) {
         const n = edge?.node;
