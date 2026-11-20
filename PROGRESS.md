@@ -473,7 +473,7 @@ Deadline 22 Dec 2026, 9:00pm Lagos. Self-imposed submission: 20 Dec. Marketplace
   answers with every relation empty. Fix: GraphClient.relatedWork asks once more (after 1.2 s)
   when every relation is empty, and the empty message has a "Check again" button. 175 tests (2 new).
   Deployed to development and verified live (Parent TD-1, Blocked by TD-3, with Link). The video's
-  graph scene and gallery-4 now use that capture. Production deploy waits for Ife's OK.
+  graph scene and gallery-4 now use that capture. Deployed to production 2.1.0 on 20 Nov (Ife approved).
 - Open: upload the video (Public), add the gallery to Devpost, submit.
 
 ## Deviations from the blueprint (decided while building)
