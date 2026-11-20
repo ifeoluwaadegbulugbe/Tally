@@ -1,0 +1,29 @@
+{
+  "name": "tally",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tally for Jira: every promise to a customer, kept. Forge app for Codegeist 2026.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build:ui": "npm --prefix static/ui run build",
+    "lint": "forge lint",
+    "deploy": "npm run build:ui && forge deploy --non-interactive -e development"
+  },
+  "dependencies": {
+    "@forge/api": "^8.5.0",
+    "@forge/kvs": "^2.1.2",
+    "@forge/resolver": "^2.0.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^5.1.0"
+  },
+  "overrides": {
+    "glob": "^14.0.4",
+    "minimatch": "^11.0.7"
+  }
+}

@@ -1,0 +1,222 @@
+modules:
+  jira:globalPage:
+    - key: tally-page
+      resource: ui
+      resolver:
+        function: resolver
+      title: Tally
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: fn-find
+      handler: index.findCommitments
+    - key: fn-account-health
+      handler: index.getAccountHealth
+    - key: fn-explain-risk
+      handler: index.explainRisk
+    - key: fn-propose
+      handler: index.proposeCandidate
+    - key: fn-draft-update
+      handler: index.draftCustomerUpdate
+    - key: fn-details
+      handler: index.getCommitmentDetails
+    - key: fn-at-risk
+      handler: index.identifyAtRisk
+
+  # Rovo agent (blueprint I). The agent does the language work; every fact comes from
+  # these actions, which call the same engine as the UI. All actions run as the user.
+  rovo:agent:
+    - key: tally-agent
+      name: Tally Agent
+      description: Finds, explains and tracks customer commitments across Jira and Confluence. Never invents promises.
+      prompt: resource:agent-resource;prompts/agent-prompt.txt
+      conversationStarters:
+        - Which commitments are at risk and why?
+        - Which commitments have no owner?
+        - How healthy is the Acme Retail account?
+        - Draft a customer update for Northwind Health
+      actions:
+        - find-commitments
+        - get-account-health
+        - explain-risk
+        - propose-candidate
+        - draft-customer-update
+
+  # Atlassian MCP server (blueprint J): the same actions exposed as MCP tools to custom
+  # agents in Rovo Studio and, once an admin enables external access, to third-party MCP
+  # clients. Calls run with the invoking user's permissions. Writes stay human-reviewed:
+  # propose-candidate only adds to the Tally inbox; nothing confirms, links or sends.
+  rovo:mcp:
+    - key: tally-mcp
+      name: Tally
+      tools:
+        - find-commitments
+        - get-account-health
+        - get-commitment-details
+        - identify-at-risk-commitments
+        - explain-risk
+        - draft-customer-update
+        - propose-candidate
+
+  action:
+    - key: get-commitment-details
+      name: Get commitment details
+      function: fn-details
+      actionVerb: GET
+      description: Returns one Tally commitment in full - owner, due date, status, health, evidence quotes, linked Jira issues, active risk signals and recent history.
+      inputs:
+        commitmentId:
+          title: Commitment ID
+          type: string
+          required: true
+          description: The commitment ID, e.g. c-nw-ehr, from find-commitments.
+    - key: identify-at-risk-commitments
+      name: Identify at-risk commitments
+      function: fn-at-risk
+      actionVerb: GET
+      description: Lists open Tally commitments whose risk rules reach a minimum severity (default 4, at risk), worst first, with every rule reason. Optionally for one account.
+      inputs:
+        minSeverity:
+          title: Minimum severity
+          type: integer
+          required: false
+          description: 2 to 5. 5 is critical, 4 at risk, 2-3 watch. Default 4.
+        account:
+          title: Account
+          type: string
+          required: false
+          description: Customer account name to limit the list to.
+    - key: find-commitments
+      name: Find commitments
+      function: fn-find
+      actionVerb: GET
+      description: Lists customer commitments tracked in Tally, filtered by account, owner (a name, "me" or "unassigned"), status, health or text. Returns up to 20 with IDs.
+      inputs:
+        account:
+          title: Account
+          type: string
+          required: false
+          description: Customer account name, e.g. Acme Retail.
+        owner:
+          title: Owner
+          type: string
+          required: false
+          description: Owner name, "me" for the current user, or "unassigned".
+        status:
+          title: Status
+          type: string
+          required: false
+          description: One of confirmed, assigned, in_delivery, delivered, communicated, renegotiated, cancelled. Default is open ones.
+        health:
+          title: Health
+          type: string
+          required: false
+          description: One of on_track, watch, at_risk, critical.
+        text:
+          title: Text
+          type: string
+          required: false
+          description: Words to look for in the commitment title or ID.
+    - key: get-account-health
+      name: Get account health
+      function: fn-account-health
+      actionVerb: GET
+      description: Summarises one customer account in Tally - open commitments by health, the top risk signals and the items that need attention.
+      inputs:
+        account:
+          title: Account
+          type: string
+          required: true
+          description: Customer account name, e.g. Northwind Health.
+    - key: explain-risk
+      name: Explain risk
+      function: fn-explain-risk
+      actionVerb: GET
+      description: Explains why a Tally commitment is at risk - each rule that fires with its plain-language reason, linked Jira issue states and the evidence quote.
+      inputs:
+        commitmentId:
+          title: Commitment ID
+          type: string
+          required: true
+          description: The commitment ID, e.g. c-nw-ehr, from find-commitments.
+    - key: propose-candidate
+      name: Propose a commitment
+      function: fn-propose
+      actionVerb: CREATE
+      description: Adds a possible customer promise to the Tally inbox for a person to review. Use when the user pastes or describes something a customer was promised. Never confirms it.
+      inputs:
+        quote:
+          title: Quote
+          type: string
+          required: true
+          description: The exact words of the promise, copied from the user's text.
+        account:
+          title: Account
+          type: string
+          required: false
+          description: Customer account name, only if the text or the user names it.
+        sourceUrl:
+          title: Source link
+          type: string
+          required: false
+          description: Link to where it was said, only if the user gave one. Never invent a link.
+        suggestedClass:
+          title: Suggested class
+          type: string
+          required: false
+          description: One of confirmed, possible, suggestion, ambiguous.
+        dueDate:
+          title: Due date
+          type: string
+          required: false
+          description: YYYY-MM-DD, only if a date is written in the quote.
+    - key: draft-customer-update
+      name: Draft a customer update
+      function: fn-draft-update
+      actionVerb: CREATE
+      description: Drafts a progress update for one customer account from Tally's stored commitments, saves it as a draft in Tally Updates and lists the IDs used. Never sends; a person approves it in Tally.
+      inputs:
+        account:
+          title: Account
+          type: string
+          required: true
+          description: Customer account name.
+        commitmentIds:
+          title: Commitment IDs
+          type: string
+          required: false
+          description: Optional comma-separated commitment IDs to limit the update to.
+resources:
+  - key: ui
+    path: static/ui/build
+  - key: agent-resource
+    path: resources
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/f43c90aa-396f-4774-951c-4f62dc2cd3a9
+permissions:
+  scopes:
+    # Store commitments, evidence quotes and history inside Forge (H3).
+    - storage:app
+    # Read issue status, assignee and due date of linked delivery work; search issues to link;
+    # check the viewer's admin permission for demo data controls.
+    - read:jira-work
+    # Create a delivery issue only when the user confirms it in Tally.
+    - write:jira-work
+    # Show owners and assignees by name; search users for the owner picker.
+    - read:jira-user
+    # Find Confluence pages to cite as evidence (CQL search).
+    - search:confluence
+    # Read a chosen page to pick and verify the quoted words; only the quote and link are stored.
+    - read:page:confluence
+    # Look up a space by key so a scan can list its pages.
+    - read:space:confluence
+    # Teamwork Graph (read-only, as the user): related work items for a linked issue,
+    # pages the owner created, and assignee names for owner suggestions.
+    - read:graph:issue:jira
+    - read:graph:page:confluence
+    - read:graph:user:atlassian
+# No external.fetch entries: keeps the app eligible for Runs on Atlassian.
